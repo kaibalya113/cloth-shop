@@ -11,3 +11,10 @@ class Product(models.Model):
     @staticmethod
     def getAllProducts():
         return Product.objects.all()
+
+    @staticmethod
+    def getAllProductsById(categoryId):
+        if categoryId:
+            return Product.objects.filter(category = categoryId)
+        else:
+            return Product.getAllProducts()
