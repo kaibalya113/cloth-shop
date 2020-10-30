@@ -6,30 +6,47 @@
     <div class="p-4 m-4">
         <div class="col-lg-5 mx-auto border rounded pt-4">
         <h3 class="alert alert-light border rounded"> Create an Account</h3>
-            <form action="/signup" method="POST">{% csrf_token %}
+            <form action="/signup" method="POST">
+                {% csrf_token %}
+
                 <div class="form-group">
                     <div class="form-group">
                   <label for="">First Name</label>
-                  <input type="text" name="fname" id="" class="form-control" placeholder="Enter your First name">
-                </div>
+                  <input type="text" name="fname" id="" value="{{value.firstName}}" class="form-control" placeholder="Enter your First name">
+                        {% if firstname%}
+                            <h6 style=" color: red">{{firstname}}</h6>
+                        {%endif%}
+                    </div>
 
                 <div class="form-group">
                   <label for="">Last Name</label>
-                  <input type="text" name="lname" id="" class="form-control" placeholder="Enter your Last Name">
+                  <input type="text" name="lname" id="" value="{{value.lastName}}" class="form-control" placeholder="Enter your Last Name">
+                     {% if lastname%}
+                        <h6 style=" color: red">{{lastname}}</h6>
+                    {%endif%}
                 </div>
 
 
                   <label for="">Email</label>
-                  <input type="email" name="email" id="" class="form-control" placeholder="Enter your email">
+                  <input type="email" required name="email" id="" value="{{value.email}}" class="form-control" placeholder="Enter your email">
+                    {% if email%}
+                        <h6 style=" color: red">{{email}}</h6>
+                    {%endif%}
                 </div>
 
                 <div class="form-group">
                   <label for="">Password</label>
-                  <input type="password" name="password" id="" class="form-control" placeholder="Enter your password">
+                  <input type="password" name="password" id="" value="{{value.password}}" class="form-control" placeholder="Enter your password">
+                    {% if password%}
+                        <h6 style=" color: red">{{password}}</h6>
+                    {%endif%}
                 </div>
                 <div class="form-group">
                   <label for="">Mobile No</label>
-                  <input type="text" name="phone" id="" class="form-control" placeholder="9999999999">
+                  <input type="text" name="phone" id="" value="{{value.phone}}" class="form-control" placeholder="9999999999">
+                    {% if phone%}
+                        <h6 style=" color: red">{{phone}}</h6>
+                    {%endif%}
                 </div>
                 
                 <div class="form-group">
