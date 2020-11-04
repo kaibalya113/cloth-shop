@@ -26,6 +26,7 @@ from django.views import View
 #         print('you are: ')
 #     return render(request, 'index.html', data)
 
+
 class Index(View):
     def get(self, request):
         category = Category.getAllCategories()
@@ -38,6 +39,8 @@ class Index(View):
         data = {}
         data['products'] = products
         data['category'] = category
+
+        print(data)
         try:
             print('you are: ' + request.session.get('customerEmail'))
         except:
@@ -48,17 +51,17 @@ class Index(View):
         productId = request.POST.get('product')
 
         cart = request.session.get('cart')
+       # print("mt nae : "+ cart)
         if cart:
-            quantity = cart[productId]
+            quantity = cart.get(productId)
             if quantity:
                 cart[productId] = quantity + 1
             else:
                 cart[productId] = 1
-
-
         else:
             cart = {}
             cart[productId] = 1
+
         request.session['cart'] = cart
         print(request.session['cart'])
         return redirect('homepage')
