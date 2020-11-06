@@ -21,7 +21,7 @@
 
         <div class="row mx-auto">
           {%for product in products%}
-            <div class="card mx-auto mb-3" style="width: 18rem;">
+            <div class="card mx-auto mb-3"  id={{product.id}} style="width: 18rem;">
               <img class="card-img-top" src={{product.image.url}} alt="Card image cap">
               <div class="card-body">
                 <p class="card-title">{{product.name}}</p>
@@ -34,14 +34,23 @@
                     {%if product|isInCart:request.session.cart %}
                       <div class="row no-gutters">
 
-                    <input type="submit" value=" - " class="col-2 btn btn-block btn-light" >
+                      <form action="/#{{product.id}}" class="col-2 " method="post">
+                               {%csrf_token%}
+                               <input value="{{product.id}}" type="text" name="product" hidden >
+                           <input value="True" type="text" name="remove" hidden >
+                               <input type="submit" value=" - " class="btn btn-block btn-light" >
+                          </form>
                     <div  class ="text-center col">
                         {{product|cartQuantity:request.session.cart}} in Cart
                     </div>
-                    <input type="submit" value=" + " class="col-2 btn btn-block btn-light" >
+                          <form action="/#{{product.id}}" class="col-2 " method="post">
+                               {%csrf_token%}
+                               <input value="{{product.id}}" type="text" name="product" hidden >
+                               <input type="submit" value=" + " class="btn btn-block btn-light" >
+                          </form>
                 </div>
                     {%else%}
-                    <form action="/" method="POST" class="btn-block">
+                    <form action="/#{{product.id}}" method="POST" class="btn-block">
                     {%csrf_token%}
 
                     <input value="{{product.id}}" type="text" name="product" hidden >
@@ -57,6 +66,8 @@
       </div>
      </div>
   </div>
+
+
   {% endblock%}
 
 
