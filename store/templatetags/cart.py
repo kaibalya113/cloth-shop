@@ -19,3 +19,14 @@ def cartQuantity(product, cart):
         if int(id) == product.id:
             return cart.get(id)
     return 0
+
+@register.filter(name='productTotal')
+def productTotal(product, cart):
+    return product.price * cartQuantity(product, cart)
+
+@register.filter(name='totalPrice')
+def totalCartProduct(products, cart):
+    sum = 0
+    for p in products:
+        sum += productTotal(p, cart)
+    return sum

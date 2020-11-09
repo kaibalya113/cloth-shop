@@ -18,3 +18,7 @@ class Product(models.Model):
             return Product.objects.filter(category = categoryId)
         else:
             return Product.getAllProducts()
+
+    @staticmethod
+    def getProductById(productID):
+        return Product.objects.filter(id__in = productID)

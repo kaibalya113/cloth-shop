@@ -7,6 +7,7 @@ from store.models.category import Category
 from store.models.customer import Customer
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import View
+from store.models.product import Product
 
 # Create your views here.
 # def index(request):
@@ -29,6 +30,9 @@ from django.views import View
 
 class Index(View):
     def get(self, request):
+        cart = request.session.get('cart')
+        if not cart:
+            request.session['cart'] = {}
         category = Category.getAllCategories()
         products = None
         categoryId = request.GET.get('category')
@@ -42,7 +46,7 @@ class Index(View):
 
         print(data)
         try:
-            print('you are: ' + request.session.get('customerEmail'))
+            print('you aref: ' + request.session.get('customerName'))
         except:
             print('you are: ')
         return render(request, 'index.html', data)
@@ -124,3 +128,11 @@ class Index(View):
 #             errorMessage = 'Email and password invalid!'
 #         print(customer)
 #         return render(request, 'login.html',{'error': errorMessage})
+
+def cart(request):
+    if request.method == "GET":
+        productIdList = list(request.session.get('cart').keys())
+        #print(productIdList)
+        product = Product.getProductById(productIdList)
+        print(product)
+        return render(request, 'cart.html', {'products': product})
